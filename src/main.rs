@@ -95,7 +95,7 @@ fn main() -> rltk::BError {
     let rooms = map.rooms;
     if !rooms.is_empty() {
         let (player_x, player_y) = rooms[0].center();
-        gs.ecs.insert(map);
+        // gs.ecs.insert(map); // FIXME
         gs.ecs
             .create_entity()
             .with(Position {
