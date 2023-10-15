@@ -32,11 +32,11 @@ pub struct Renderable {
 fn try_move_player(delta_x: i32, delta_y: i32, ecs: &mut World) {
     let mut positions = ecs.write_storage::<Position>();
     let mut players = ecs.write_storage::<Player>();
-    let map = ecs.fetch::<Vec<TileType>>();
+    let map = ecs.fetch::<Map>();
 
     for (_player, pos) in (&mut players, &mut positions).join() {
         let destination_idx = xy_idx(pos.x + delta_x, pos.y + delta_y);
-        if map[destination_idx] != TileType::Wall {
+        if map.tiles[destination_idx] != TileType::Wall {
             pos.x = min(79, max(0, pos.x + delta_x));
             pos.y = min(49, max(0, pos.y + delta_y));
         }
@@ -68,8 +68,8 @@ impl GameState for State {
         player_input(self, ctx);
         self.run_systems();
 
-        let map = self.ecs.fetch::<Vec<TileType>>();
-        draw_map(&map, ctx);
+        let map = self.ecs.fetch::<Map>();
+        draw_map(&map.tiles, ctx);
 
         let positions = self.ecs.read_storage::<Position>();
         let renderables = self.ecs.read_storage::<Renderable>();
@@ -91,11 +91,10 @@ fn main() -> rltk::BError {
     gs.ecs.register::<Position>();
     gs.ecs.register::<Renderable>();
     gs.ecs.register::<Player>();
-    let map = Map::new_map_rooms_and_corridors();
-    let rooms = map.rooms;
-    if !rooms.is_empty() {
-        let (player_x, player_y) = rooms[0].center();
-        // gs.ecs.insert(map); // FIXME
+    let map: Map = Map::new_map_rooms_and_corridors();
+    let (player_x, player_y) = map.rooms[0].center();
+    if !map.rooms.is_empty() {
+        gs.ecs.insert(map);
         gs.ecs
             .create_entity()
             .with(Position {
