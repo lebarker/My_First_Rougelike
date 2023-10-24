@@ -1,7 +1,12 @@
+use super::components::Viewshed;
+use super::Player;
 use rltk::Algorithm2D;
 use rltk::BaseMap;
 use rltk::Point;
 use rltk::{RandomNumberGenerator, Rltk, RGB};
+use specs::Join;
+use specs::World;
+use specs::WorldExt;
 use std::cmp::{max, min};
 
 #[derive(PartialEq, Copy, Clone)]
