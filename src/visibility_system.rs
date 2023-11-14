@@ -1,5 +1,4 @@
-use super::components::Viewshed;
-use super::{Map, Position};
+use super::{Map, Position, Viewshed};
 use rltk::{field_of_view, Point};
 use specs::prelude::*;
 
