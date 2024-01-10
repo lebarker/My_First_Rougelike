@@ -50,7 +50,6 @@ impl GameState for State {
         ctx.print(1, 1, "Hello Rust World");
     }
 }
-
 fn main() -> rltk::BError {
     use rltk::RltkBuilder;
     let context = RltkBuilder::simple80x50()
@@ -82,6 +81,7 @@ fn main() -> rltk::BError {
                 range: 8,
                 dirty: true,
             })
+
     }
     .build();
 

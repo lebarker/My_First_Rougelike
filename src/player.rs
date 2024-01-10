@@ -1,4 +1,6 @@
-use super::{xy_idx, Player, Position, State, TileType, Viewshed};
+
+use crate::components::Viewshed;
+use super::{xy_idx, Player, Position, State, TileType};
 use crate::map::Map;
 use rltk::{Rltk, VirtualKeyCode};
 use specs::prelude::*;
@@ -15,6 +17,7 @@ pub fn try_move_player(delta_x: i32, delta_y: i32, ecs: &mut World) {
         if map.tiles[destination_idx] != TileType::Wall {
             pos.x = min(79, max(0, pos.x + delta_x));
             pos.y = min(49, max(0, pos.y + delta_y));
+
 
             viewshed.dirty = true;
         }
@@ -33,7 +36,7 @@ pub fn player_input(gs: &mut State, ctx: &mut Rltk) {
             VirtualKeyCode::Right => try_move_player(1, 0, &mut gs.ecs),
             VirtualKeyCode::Down => try_move_player(0, 1, &mut gs.ecs),
             VirtualKeyCode::Up => try_move_player(0, -1, &mut gs.ecs),
-            VirtualKeyCode::LControl => try_move_player(-3, 0, &mut gs.ecs),
+            VirtualKeyCode::LControl => try_move_player(-2, 0, &mut gs.ecs),
             _ => {}
         },
     }
