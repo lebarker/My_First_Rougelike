@@ -50,7 +50,6 @@ impl GameState for State {
         ctx.print(1, 1, "Hello Rust World");
     }
 }
-
 fn main() -> rltk::BError {
     use rltk::RltkBuilder;
     let context = RltkBuilder::simple80x50()
@@ -77,10 +76,7 @@ fn main() -> rltk::BError {
                 bg: RGB::named(rltk::BLACK),
             })
             .with(Player {})
-            .with(Viewshed {
-                visible_tiles: Vec::new(),
-                range: 8,
-            })
+            .with(Viewshed{ visible_tiles : Vec::new(), range: 8, dirty: true })
             .build();
 
         rltk::main_loop(context, gs)
