@@ -15,14 +15,14 @@ pub fn try_move_player(delta_x: i32, delta_y: i32, ecs: &mut World) {
     for (_player, pos, viewshed) in (&mut players, &mut positions, &mut viewsheds).join() {
         let destination_idx = map.xy_idx(pos.x + delta_x, pos.y + delta_y);
         if map.tiles[destination_idx] != TileType::Wall {
-            pos.x = min(79, max(0, pos.x + delta_x));
+            pos.x = min(79 , max(0, pos.x + delta_x));
             pos.y = min(49, max(0, pos.y + delta_y));
-
 
             viewshed.dirty = true;
         }
     }
 }
+
 pub fn player_input(gs: &mut State, ctx: &mut Rltk) {
     // Player movement
     match ctx.key {

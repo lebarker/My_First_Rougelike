@@ -1,6 +1,7 @@
 use super::{Map, Player, Position, Viewshed};
 use rltk::{field_of_view, Point};
 use specs::prelude::*;
+use specs::Component;
 
 pub struct VisibilitySystem {}
 
