@@ -13,7 +13,7 @@ impl<'a> System<'a> for VisibilitySystem {
         WriteStorage<'a, Position>,
         ReadStorage<'a, Player>,
     );
-
+    
     fn run(&mut self, data: Self::SystemData) {
         let (mut map, entities, mut viewshed, pos, player) = data;
 
@@ -24,14 +24,7 @@ impl<'a> System<'a> for VisibilitySystem {
                 .visible_tiles
                 .retain(|p| p.x >= 0 && p.x < map.width && p.y >= 0 && p.y < map.height);
 
-            // If this is the player, reveal what they can see
-            let p: Option<&Player> = player.get(ent);
-            if let Some(p) = p {
-                for vis in viewshed.visible_tiles.iter() {
-                    let idx = map.xy_idx(vis.x, vis.y);
-                    map.revealed_tiles[idx] = true;
-                }
-            }
+            
         }
     }
 }
